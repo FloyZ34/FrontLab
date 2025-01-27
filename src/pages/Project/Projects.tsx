@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { projects } from "../../data/projects";
-import {Project} from "../../types/Project.tsx";
-import {ModalProject} from "./ModalProject.tsx";
+import { Project } from "../../types/Project.tsx";
+import { ModalProject } from "./ModalProject.tsx";
 
 export const Projects = () => {
     const [selectedTech, setSelectedTech] = useState<string>("All");
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-    const technologies = Array.from(
-        new Set(projects.flatMap((project) => project.technologies))
+    const technologies = useMemo(
+        () => Array.from(new Set(projects.flatMap((project) => project.technologies))),
+        [projects]
     );
 
     const filteredProjects = projects.filter((project) =>
@@ -19,10 +20,10 @@ export const Projects = () => {
     const closeModal = () => setSelectedProject(null);
 
     return (
-        <div className="container font-sans text-gray-800">
+        <div className="main-container font-sans text-gray-800">
             <h2 className="text-4xl text-black mb-5 text-center">Проекты</h2>
 
-            <div className="container flex justify-center flex-wrap mb-5 px-4 space-x-4">
+            <div className="button-container flex justify-center flex-wrap mb-5 px-4 space-x-4">
                 <button
                     onClick={() => setSelectedTech("All")}
                     className={`px-6 py-3 shadow-md transition-transform transform hover:-translate-y-1 m-2 ${
@@ -44,12 +45,12 @@ export const Projects = () => {
                 ))}
             </div>
 
-            <ul className="container list-none p-0 max-w-3xl mx-auto">
+            <ul className="project-list list-none p-0 max-w-3xl mx-auto">
                 {filteredProjects.map((project, index) => (
                     <li
                         key={index}
                         onClick={() => openModal(project)}
-                        className="bg-white p-5 mb-4 rounded-lg shadow-md transition-transform transform hover:-translate-y-1 cursor-pointer"
+                        className="project-item bg-white p-5 mb-4 rounded-lg shadow-md transition-transform transform hover:-translate-y-1 cursor-pointer"
                     >
                         <h3 className="text-2xl mb-2">{project.title}</h3>
                         <p className="text-lg leading-relaxed mb-2">{project.description}</p>
