@@ -5,7 +5,7 @@ import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Skills } from './pages/Skills';
 import { Projects } from './pages/Project/Projects.tsx';
-import { Contact } from './pages/Contact';
+import { Contact } from './pages/Contact/Contact.tsx';
 
 function App() {
     return (
